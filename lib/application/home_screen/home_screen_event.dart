@@ -21,6 +21,5 @@ class AnswerSelectedEvent extends HomeScreenEvent {
 }
 
 class AnswerCompleteEvent extends HomeScreenEvent {
-  // final int correctAnswercount;
-  // AnswerCompleteEvent({required this.correctAnswercount});
+
 }

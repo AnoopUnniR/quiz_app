@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 
 part 'home_screen_event.dart';
@@ -11,11 +10,11 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     List<QuestionDbModel> questions = [];
     int intex = 0;
     on<HomeScreenLoadingEvent>((event, emit) {
+    numberOfCorrectAnswers = 0;
       questions.addAll(event.questions);
       emit(HomeScreenLoadig());
       emit(HomeScreenNewQuestion(question: questions[intex]));
     });
-
     on<AnswerSelectedEvent>((event, emit) {
       emit(AnswerSelected(selectedAnser: event.number));
     });
@@ -24,6 +23,10 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
         numberOfCorrectAnswers++;
       }
       emit(HomeScreenNewQuestion(question: event.nextQuestion));
+    });
+
+    on<AnswerCompleteEvent>((event, emit) {
+      emit(AsnwerCompleted(correctAnswerCount: numberOfCorrectAnswers));
     });
   }
 }

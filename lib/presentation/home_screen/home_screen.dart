@@ -5,6 +5,8 @@ import 'package:quiz_app_demo/constands/constants.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 import 'package:quiz_app_demo/presentation/finalpage/final_page.dart';
 
+import 'widgets/selection_box_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   final List<QuestionDbModel> questions;
   const HomeScreen({required this.questions, super.key});
@@ -21,12 +23,15 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
           child: BlocConsumer<HomeScreenBloc, HomeScreenState>(
         listener: (context, state) {
+          //navigates to the final page if questions are all answered.
           if (state is AsnwerCompleted) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    FinalPage(correctAnswerCount: state.correctAnswerCount),
+                builder: (context) => FinalPage(
+                  correctAnswerCount: state.correctAnswerCount,
+                  totalNumberOfQuestions: questions.length,
+                ),
               ),
             );
           }
@@ -43,15 +48,26 @@ class HomeScreen extends StatelessWidget {
               Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: Container(
-                    width: width * 80,
-                    height: 10,
-                    color: Colors.white,
-                  ),
+                  child: SizedBox(
+                      width: width * 80,
+                      height: 20,
+                      child: Transform.rotate(
+                        angle: 3.14,
+                        child: LinearProgressIndicator(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
+                          value: questNumber / questions.length,
+                          backgroundColor:
+                              const Color.fromARGB(255, 76, 28, 84),
+                          color: Colors.yellow,
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color(0xFFC353D6)),
+                        ),
+                      )),
                 ),
               ),
               const SizedBox(
-                height: 100,
+                height: 80,
               ),
               //Question widget
               SizedBox(
@@ -72,6 +88,10 @@ class HomeScreen extends StatelessWidget {
                   options = [...quest.options];
                   return InkWell(
                     onTap: () {
+                      //returns if the value is allready selected
+                      if (selectedAnswer != -1) {
+                        return;
+                      }
                       BlocProvider.of<HomeScreenBloc>(context)
                           .add(AnswerSelectedEvent(number: index));
                     },
@@ -86,94 +106,33 @@ class HomeScreen extends StatelessWidget {
               ),
               if (state is AnswerSelected)
                 ElevatedButton(
-                    style: ButtonStyle(
+                  style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      if (questNumber == questions.length) {
-                        BlocProvider.of<HomeScreenBloc>(context)
-                            .add(AnswerCompleteEvent());
-                        return;
-                      }
-                      BlocProvider.of<HomeScreenBloc>(context).add(
-                        HomeNextQuestionEvent(
-                            nextQuestion: questions[questNumber++],
-                            wasCorrextAnswers:
-                                options[selectedAnswer].isCorrect),
-                      );
-                      selectedAnswer = -1;
-                    },
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: screenBackgroundColor),
-                    ))
+                      shape: constantButtonStyles),
+                  onPressed: () {
+                    //if all questions are over we will call an even to navigate to final page
+                    if (questNumber == questions.length) {
+                      BlocProvider.of<HomeScreenBloc>(context)
+                          .add(AnswerCompleteEvent());
+                      return;
+                    }
+                    BlocProvider.of<HomeScreenBloc>(context).add(
+                      HomeNextQuestionEvent(
+                          nextQuestion: questions[questNumber++],
+                          wasCorrextAnswers: options[selectedAnswer].isCorrect),
+                    );
+                    selectedAnswer = -1;
+                  },
+                  child: const Text(
+                    "Next",
+                    style: TextStyle(color: screenBackgroundColor),
+                  ),
+                )
             ],
           );
         },
       )),
     );
-  }
-}
-
-class SelectionBoxWidget extends StatelessWidget {
-  const SelectionBoxWidget(
-      {super.key,
-      required this.width,
-      required this.intex,
-      required this.option,
-      required this.selectedAnswer});
-
-  final double width;
-  final int intex;
-  final OptionDbModel option;
-  final int selectedAnswer;
-
-  @override
-  Widget build(BuildContext context) {
-    int count = intex + 1;
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: width * 80,
-        height: 60.0,
-        decoration: BoxDecoration(
-          color: backgroundColorOfWidget(
-              selectedAnswer: selectedAnswer, option: option, intex: intex),
-          borderRadius: BorderRadius.circular(
-              20.0), // Adjust the radius for more/less curvature
-          border: Border.all(
-            color: Colors.white, // Border color
-            width: 2.0, // Border width
-          ),
-        ),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "$count. ${option.text}",
-            style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Color? backgroundColorOfWidget(
-      {required int selectedAnswer,
-      required OptionDbModel option,
-      required int intex}) {
-    if (selectedAnswer == -1) return null;
-    if (option.isCorrect) return Colors.green;
-    if (selectedAnswer == intex && !option.isCorrect) return Colors.red;
-    return null;
   }
 }

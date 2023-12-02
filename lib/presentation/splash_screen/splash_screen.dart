@@ -50,11 +50,7 @@ class SplashScreen extends StatelessWidget {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             const Color(0xFF8514E1)),
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
+                            constantButtonStyles
                       ),
                       child: (state is SplashScreenLoadingState)
                           ? const CircularProgressIndicator(

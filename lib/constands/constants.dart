@@ -9,3 +9,10 @@ const sbh40 = SizedBox(
 );
 
 const Color screenBackgroundColor = Color(0xFF481450);
+
+MaterialStateProperty<RoundedRectangleBorder?> constantButtonStyles =
+    MaterialStateProperty.all<RoundedRectangleBorder>(
+  RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10.0),
+  ),
+);
