@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app_demo/application/home_screenss/home_screen_bloc.dart';
 import 'package:quiz_app_demo/application/splash_screen/splash_screen_bloc.dart';
 import 'package:quiz_app_demo/constands/constants.dart';
 import 'package:quiz_app_demo/presentation/home_screen/home_screen.dart';
@@ -36,22 +37,21 @@ class SplashScreen extends StatelessWidget {
                           return;
                         }
                         if (state is SplashScreenLoadingCompleteState) {
+                          BlocProvider.of<HomeScreenBloc>(context).add(
+                              HomeScreenEvent.homeEventStarted(
+                                  questionList: state.questions));
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HomeScreen(
-                                questions: state.questions,
-                              ),
+                              builder: (context) => const HomeScreen(),
                             ),
                           );
                         }
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF8514E1)),
-                        shape:
-                            constantButtonStyles
-                      ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xFF8514E1)),
+                          shape: constantButtonStyles),
                       child: (state is SplashScreenLoadingState)
                           ? const CircularProgressIndicator(
                               color: Colors.white,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:quiz_app_demo/application/home_screen/home_screen_bloc.dart';
+import 'package:quiz_app_demo/application/home_screenss/home_screen_bloc.dart';
 import 'package:quiz_app_demo/application/splash_screen/splash_screen_bloc.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 import 'package:quiz_app_demo/infrastructure/db_functions/store_questions_db.dart';

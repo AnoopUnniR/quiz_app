@@ -32,6 +32,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
       }
 //in case if the database already has the data we will collect it and use it.
       else{
+         emit(SplashScreenLoadingState());
         List<QuestionDbModel> questions =  await questionsLocalRepository.retreiveQuestions();
           emit(SplashScreenLoadingCompleteState(questions: questions));
       }
