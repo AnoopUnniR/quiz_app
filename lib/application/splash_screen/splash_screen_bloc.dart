@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 import 'package:quiz_app_demo/domain/questions_model/questions_model.dart';
 import 'package:quiz_app_demo/infrastructure/db_functions/store_questions_db.dart';
@@ -23,18 +22,29 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
         final response = await getQuestionsRepository.getQuizQuests();
         final states = response.fold((questionModel) {
           return questionModel;
-        }, (error) => null);
+        }, (error) {
+          final states = error.failureText;
+          return states;
+        });
         if (states is List<QuestionsModel>) {
           await questionsLocalRepository.storeDataTodb(states);
-          List<QuestionDbModel> questions =  await questionsLocalRepository.retreiveQuestions();
+          List<QuestionDbModel> questions =
+              await questionsLocalRepository.retreiveQuestions();
           emit(SplashScreenLoadingCompleteState(questions: questions));
+        } else {
+          emit(
+            SplashScreenErrorState(
+              error: states.toString(),
+            ),
+          );
         }
       }
 //in case if the database already has the data we will collect it and use it.
-      else{
-         emit(SplashScreenLoadingState());
-        List<QuestionDbModel> questions =  await questionsLocalRepository.retreiveQuestions();
-          emit(SplashScreenLoadingCompleteState(questions: questions));
+      else {
+        emit(SplashScreenLoadingState());
+        List<QuestionDbModel> questions =
+            await questionsLocalRepository.retreiveQuestions();
+        emit(SplashScreenLoadingCompleteState(questions: questions));
       }
     });
   }

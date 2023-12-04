@@ -678,8 +678,6 @@ mixin _$HomeScreenState {
   List<QuestionDbModel> get questionList => throw _privateConstructorUsedError;
   int get selectedAnswerIndex => throw _privateConstructorUsedError;
   int get correctAnswerCount => throw _privateConstructorUsedError;
-  bool get isDataLoading => throw _privateConstructorUsedError;
-  bool get isError => throw _privateConstructorUsedError;
   int get totalNumberOfQuestion => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -687,8 +685,6 @@ mixin _$HomeScreenState {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)
         started,
   }) =>
@@ -699,8 +695,6 @@ mixin _$HomeScreenState {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)?
         started,
   }) =>
@@ -711,8 +705,6 @@ mixin _$HomeScreenState {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)?
         started,
     required TResult orElse(),
@@ -750,8 +742,6 @@ abstract class $HomeScreenStateCopyWith<$Res> {
       {List<QuestionDbModel> questionList,
       int selectedAnswerIndex,
       int correctAnswerCount,
-      bool isDataLoading,
-      bool isError,
       int totalNumberOfQuestion});
 }
 
@@ -771,8 +761,6 @@ class _$HomeScreenStateCopyWithImpl<$Res, $Val extends HomeScreenState>
     Object? questionList = null,
     Object? selectedAnswerIndex = null,
     Object? correctAnswerCount = null,
-    Object? isDataLoading = null,
-    Object? isError = null,
     Object? totalNumberOfQuestion = null,
   }) {
     return _then(_value.copyWith(
@@ -788,14 +776,6 @@ class _$HomeScreenStateCopyWithImpl<$Res, $Val extends HomeScreenState>
           ? _value.correctAnswerCount
           : correctAnswerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      isDataLoading: null == isDataLoading
-          ? _value.isDataLoading
-          : isDataLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isError: null == isError
-          ? _value.isError
-          : isError // ignore: cast_nullable_to_non_nullable
-              as bool,
       totalNumberOfQuestion: null == totalNumberOfQuestion
           ? _value.totalNumberOfQuestion
           : totalNumberOfQuestion // ignore: cast_nullable_to_non_nullable
@@ -816,8 +796,6 @@ abstract class _$$StartedImplCopyWith<$Res>
       {List<QuestionDbModel> questionList,
       int selectedAnswerIndex,
       int correctAnswerCount,
-      bool isDataLoading,
-      bool isError,
       int totalNumberOfQuestion});
 }
 
@@ -835,8 +813,6 @@ class __$$StartedImplCopyWithImpl<$Res>
     Object? questionList = null,
     Object? selectedAnswerIndex = null,
     Object? correctAnswerCount = null,
-    Object? isDataLoading = null,
-    Object? isError = null,
     Object? totalNumberOfQuestion = null,
   }) {
     return _then(_$StartedImpl(
@@ -852,14 +828,6 @@ class __$$StartedImplCopyWithImpl<$Res>
           ? _value.correctAnswerCount
           : correctAnswerCount // ignore: cast_nullable_to_non_nullable
               as int,
-      isDataLoading: null == isDataLoading
-          ? _value.isDataLoading
-          : isDataLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isError: null == isError
-          ? _value.isError
-          : isError // ignore: cast_nullable_to_non_nullable
-              as bool,
       totalNumberOfQuestion: null == totalNumberOfQuestion
           ? _value.totalNumberOfQuestion
           : totalNumberOfQuestion // ignore: cast_nullable_to_non_nullable
@@ -875,8 +843,6 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
       {required final List<QuestionDbModel> questionList,
       required this.selectedAnswerIndex,
       required this.correctAnswerCount,
-      required this.isDataLoading,
-      required this.isError,
       required this.totalNumberOfQuestion})
       : _questionList = questionList;
 
@@ -893,15 +859,11 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
   @override
   final int correctAnswerCount;
   @override
-  final bool isDataLoading;
-  @override
-  final bool isError;
-  @override
   final int totalNumberOfQuestion;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeScreenState.started(questionList: $questionList, selectedAnswerIndex: $selectedAnswerIndex, correctAnswerCount: $correctAnswerCount, isDataLoading: $isDataLoading, isError: $isError, totalNumberOfQuestion: $totalNumberOfQuestion)';
+    return 'HomeScreenState.started(questionList: $questionList, selectedAnswerIndex: $selectedAnswerIndex, correctAnswerCount: $correctAnswerCount, totalNumberOfQuestion: $totalNumberOfQuestion)';
   }
 
   @override
@@ -912,8 +874,6 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
       ..add(DiagnosticsProperty('questionList', questionList))
       ..add(DiagnosticsProperty('selectedAnswerIndex', selectedAnswerIndex))
       ..add(DiagnosticsProperty('correctAnswerCount', correctAnswerCount))
-      ..add(DiagnosticsProperty('isDataLoading', isDataLoading))
-      ..add(DiagnosticsProperty('isError', isError))
       ..add(
           DiagnosticsProperty('totalNumberOfQuestion', totalNumberOfQuestion));
   }
@@ -929,9 +889,6 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
                 other.selectedAnswerIndex == selectedAnswerIndex) &&
             (identical(other.correctAnswerCount, correctAnswerCount) ||
                 other.correctAnswerCount == correctAnswerCount) &&
-            (identical(other.isDataLoading, isDataLoading) ||
-                other.isDataLoading == isDataLoading) &&
-            (identical(other.isError, isError) || other.isError == isError) &&
             (identical(other.totalNumberOfQuestion, totalNumberOfQuestion) ||
                 other.totalNumberOfQuestion == totalNumberOfQuestion));
   }
@@ -942,8 +899,6 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
       const DeepCollectionEquality().hash(_questionList),
       selectedAnswerIndex,
       correctAnswerCount,
-      isDataLoading,
-      isError,
       totalNumberOfQuestion);
 
   @JsonKey(ignore: true)
@@ -959,13 +914,11 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)
         started,
   }) {
     return started(questionList, selectedAnswerIndex, correctAnswerCount,
-        isDataLoading, isError, totalNumberOfQuestion);
+        totalNumberOfQuestion);
   }
 
   @override
@@ -975,13 +928,11 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)?
         started,
   }) {
     return started?.call(questionList, selectedAnswerIndex, correctAnswerCount,
-        isDataLoading, isError, totalNumberOfQuestion);
+        totalNumberOfQuestion);
   }
 
   @override
@@ -991,15 +942,13 @@ class _$StartedImpl with DiagnosticableTreeMixin implements Started {
             List<QuestionDbModel> questionList,
             int selectedAnswerIndex,
             int correctAnswerCount,
-            bool isDataLoading,
-            bool isError,
             int totalNumberOfQuestion)?
         started,
     required TResult orElse(),
   }) {
     if (started != null) {
       return started(questionList, selectedAnswerIndex, correctAnswerCount,
-          isDataLoading, isError, totalNumberOfQuestion);
+          totalNumberOfQuestion);
     }
     return orElse();
   }
@@ -1038,8 +987,6 @@ abstract class Started implements HomeScreenState {
       {required final List<QuestionDbModel> questionList,
       required final int selectedAnswerIndex,
       required final int correctAnswerCount,
-      required final bool isDataLoading,
-      required final bool isError,
       required final int totalNumberOfQuestion}) = _$StartedImpl;
 
   @override
@@ -1048,10 +995,6 @@ abstract class Started implements HomeScreenState {
   int get selectedAnswerIndex;
   @override
   int get correctAnswerCount;
-  @override
-  bool get isDataLoading;
-  @override
-  bool get isError;
   @override
   int get totalNumberOfQuestion;
   @override

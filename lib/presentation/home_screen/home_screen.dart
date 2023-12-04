@@ -5,6 +5,7 @@ import 'package:quiz_app_demo/constands/constants.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 import 'package:quiz_app_demo/presentation/finalpage/final_page.dart';
 
+import 'widgets/next_question_button_widget.dart';
 import 'widgets/selection_box_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -105,27 +106,8 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 if (state.selectedAnswerIndex != -1)
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                        shape: constantButtonStyles),
-                    onPressed: () {
-                      // if all questions are over we will call an even to navigate to final page
-                      if (state.questionList.isEmpty) {
-                        return;
-                      }
-                      BlocProvider.of<HomeScreenBloc>(context).add(
-                        NextQuestionEvent(
-                          selectedOptionIntex: state.selectedAnswerIndex,
-                          questionList: state.questionList,
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: screenBackgroundColor),
-                    ),
+                  NextQuestionButtonWidget(
+                    state: state,
                   )
               ],
             ),
@@ -135,4 +117,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

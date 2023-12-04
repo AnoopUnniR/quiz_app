@@ -6,13 +6,11 @@ class HomeScreenState with _$HomeScreenState {
       {required List<QuestionDbModel> questionList,
       required int selectedAnswerIndex,
       required int correctAnswerCount,
-      required bool isDataLoading,
-      required bool isError,
+      
       required int totalNumberOfQuestion}) = Started;
   factory HomeScreenState.initial() => const HomeScreenState.started(
       correctAnswerCount: 0,
       questionList: [],
       selectedAnswerIndex: -1,
-      isDataLoading: false,
-      isError: false,totalNumberOfQuestion: 0);
+      totalNumberOfQuestion: 0);
 }

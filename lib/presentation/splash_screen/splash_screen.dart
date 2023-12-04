@@ -29,7 +29,19 @@ class SplashScreen extends StatelessWidget {
                 height: 50,
                 width: 160,
                 child: BlocConsumer<SplashScreenBloc, SplashScreenState>(
-                  listener: (context, state) {},
+                  listener: (context, state) {
+                    if (state is SplashScreenErrorState) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          content: Text(
+                            state.error,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   builder: (context, state) {
                     return ElevatedButton(
                       onPressed: () {
