@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "D:/flutter/Machine test/quiz_app_demo/linux"
+    "cmake.sourceDirectory": "D:/flutter/Machine test/quiz_app_demo/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

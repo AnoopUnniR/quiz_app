@@ -27,14 +27,17 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     on<NextQuestionEvent>((event, emit) {
       List<QuestionDbModel> questions = [...event.questionList];
       QuestionDbModel question = questions.removeAt(0);
-      if (question.options[event.selectedOptionIntex].isCorrect) {
+      if (event.selectedOptionIntex == -1) {
+        totalNumberOfQuestion--;
+      } else if (question.options[event.selectedOptionIntex].isCorrect) {
         correctAnswerCount++;
       }
       emit(state.copyWith(
           selectedAnswerIndex: -1,
           questionList: questions,
           correctAnswerCount: correctAnswerCount,
-          totalNumberOfQuestion: totalNumberOfQuestion));
+          totalNumberOfQuestion: totalNumberOfQuestion),
+        );
     });
   }
 }

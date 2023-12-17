@@ -12,8 +12,7 @@ class FinalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int scoreInPercent =
-        ((correctAnswerCount / totalNumberOfQuestions) * 100).round();
+    int scoreInPercent = getPercentageOfCorrectAnswer();
     double width = MediaQuery.of(context).size.width / 100;
     return Scaffold(
       backgroundColor: screenBackgroundColor,
@@ -113,4 +112,9 @@ class FinalPage extends StatelessWidget {
       ),
     );
   }
+
+  int getPercentageOfCorrectAnswer() =>
+      (correctAnswerCount == 0 || totalNumberOfQuestions == 0)
+          ? 0
+          : ((correctAnswerCount / totalNumberOfQuestions) * 100).round();
 }

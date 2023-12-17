@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz_app_demo/application/home_screenss/home_screen_bloc.dart';
 import 'package:quiz_app_demo/constands/constants.dart';
+import 'package:quiz_app_demo/core/progress_timer/progress_timer.dart';
 import 'package:quiz_app_demo/domain/local_storage/questions_db.dart';
 import 'package:quiz_app_demo/presentation/finalpage/final_page.dart';
 
 import 'widgets/next_question_button_widget.dart';
 import 'widgets/selection_box_widget.dart';
+import 'widgets/timer_progress_indicator_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TimerModel timer = TimerModel();
     double width = MediaQuery.of(context).size.width / 100;
     List<OptionDbModel> options = [];
     return Scaffold(
@@ -35,36 +38,23 @@ class HomeScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          if (state.questionList.isNotEmpty &&
+              state.selectedAnswerIndex == -1) {
+            timer.progress.value = 60;
+            timer.startTimer();
+          }
+
           if (state.questionList.isEmpty) {
+            timer.progress.value = 60;
             return const CircularProgressIndicator();
           }
+          //calling the timer function to update progress bar
           QuestionDbModel quest = state.questionList.first;
           return SingleChildScrollView(
             child: Column(
               children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: SizedBox(
-                      width: width * 80,
-                      height: 20,
-                      child: Transform.rotate(
-                        angle: 3.14,
-                        child: LinearProgressIndicator(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                          value: state.questionList.length / 5,
-                          backgroundColor:
-                              const Color.fromARGB(255, 76, 28, 84),
-                          color: Colors.yellow,
-                          valueColor: const AlwaysStoppedAnimation<Color>(
-                            Color(0xFFC353D6),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                TimerProgressIndicatorWidget(selectedAnswerIntex: state.selectedAnswerIndex,
+                    width: width, timer: timer, state: state),
                 const SizedBox(
                   height: 80,
                 ),
@@ -87,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                     options = [...quest.options];
                     return InkWell(
                       onTap: () {
-                        //returns if the value is allready selected
+                        //returns if the value is already selected
                         if (state.selectedAnswerIndex != -1) {
                           return;
                         }
